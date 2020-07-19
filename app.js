@@ -15,7 +15,8 @@ var commentRoute = require('./routes/comment'),
 	campgroundRoute = require('./routes/campground'),
 	indexRoute = require('./routes/index')
 
-mongoose.connect("mongodb+srv://JimmyOuyang:20000620oyjh@yelpcamp.czcof.mongodb.net/<dbname>?retryWrites=true&w=majority", 
+var url = process.env.DATABASEURL || "mongodb://localhost/yelp_camp"
+mongoose.connect(url, 
 {useNewUrlParser:true
 }).then(()=>{
 	console.log("SUCCEED")
