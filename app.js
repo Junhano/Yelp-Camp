@@ -65,8 +65,10 @@ app.use(campgroundRoute)
 app.use(indexRoute)
 
 
-app.listen(3000, function(){
-	console.log('Yelp Camp server starts')
-})
+var port = process.env.PORT || 3000;
+app.listen(port, function () {
+    console.log("Server Has Started!");
+});
+
 
 
