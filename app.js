@@ -14,7 +14,16 @@ var flash = require('connect-flash')
 var commentRoute = require('./routes/comment'),
 	campgroundRoute = require('./routes/campground'),
 	indexRoute = require('./routes/index')
-mongoose.connect("mongodb://localhost/yelp_camp", {useNewUrlParser:true})
+
+mongoose.connect("mongodb+srv://JimmyOuyang:20000620oyjh@yelpcamp.czcof.mongodb.net/<dbname>?retryWrites=true&w=majority", 
+{useNewUrlParser:true
+}).then(()=>{
+	console.log("SUCCEED")
+}).catch(err =>{
+		 console.log(err.message)
+	})
+	
+
 
 
 //seedDB();
