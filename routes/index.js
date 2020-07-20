@@ -12,7 +12,7 @@ router.get('/', function(req,res){
 
 //Auth
 router.get('/register', function(req, res){
-	res.render('register', {currentUser: req.user})
+	res.render('register')
 })
 
 router.post('/register', function(req, res){

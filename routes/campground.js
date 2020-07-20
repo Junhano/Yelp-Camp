@@ -19,8 +19,9 @@ router.get('/campgrounds', function(req, res){
 router.post('/campgrounds', middleware.isLoggedIn, function(req, res){
 	let title = req.body.name
 	let src = req.body.image
+	let price = req.body.price
 	let des = req.body.des
-	Campground.create({name:title, image:src, description:des, author: {id: req.user, name: req.user.username}}, function(err, campgrounds){
+	Campground.create({name:title, price: price, image:src, description:des, author: {id: req.user, name: req.user.username}}, function(err, campgrounds){
 		if (err){
 			console.log(err)
 		}

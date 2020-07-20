@@ -17,14 +17,15 @@ var commentRoute = require('./routes/comment'),
 
 var url = process.env.DATABASEURL || "mongodb://localhost/yelp_camp"
 mongoose.connect(url, 
-{useNewUrlParser:true
+{useNewUrlParser:true,
+useUnifiedTopology: true
 }).then(()=>{
 	console.log("SUCCEED")
 }).catch(err =>{
 		 console.log(err.message)
 	})
 	
-
+mongoose.set('useFindAndModify', false);
 
 
 //seedDB();
