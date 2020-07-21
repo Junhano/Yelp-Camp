@@ -30,7 +30,6 @@ router.post('/register', function(req, res){
 
 //Login
 router.get('/login', function(req, res){
-	req.flash('error', 'You need to log in ')
 	res.render('login')
 })
 
