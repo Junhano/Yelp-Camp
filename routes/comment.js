@@ -24,7 +24,7 @@ router.post('/campgrounds/:id/comment', middleware.isLoggedIn, function(req, res
 			console.log(err);
 		}
 		else{
-			Comment.create({text: req.body.comment, rating: req.body.rating, author: {id: req.user, username: req.user.username}}, function(err, newcomment){
+			Comment.create({text: req.body.comment, rating: req.body.ratingstar, author: {id: req.user, username: req.user.username}}, function(err, newcomment){
 				if (err){
 					console.log(err)
 				}
