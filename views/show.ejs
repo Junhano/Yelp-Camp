@@ -21,6 +21,17 @@
 					<p>
 						<em>-Created by <%= element.author.name %></em>
 					</p>
+					<p>
+						<% let total = 0 %>
+						<% element.comment.forEach(function(comments){ %>
+						<% total += comments.rating %>
+						<% }) %>
+						<% let campground_rating = 0 %>
+						<% if (element.comment.length != 0){ %>
+						<% campground_rating = total / element.comment.length %>
+						<% } %>
+						Rating: <%= campground_rating %>
+					</p>
 					<% if (currentUser && element.author.id.equals(currentUser._id)){ %>
 					<a class = "btn btn-warning" href = "/campgrounds/<%= element._id %>/edit">Edit Campground Page</a>
 					<button type = "button" class = "btn btn-danger" data-toggle="modal" data-target="#deleteform">Delete Page</button>				

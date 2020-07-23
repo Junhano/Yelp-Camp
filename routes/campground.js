@@ -73,7 +73,7 @@ router.delete('/campgrounds/:id', middleware.checkCampgroundOwnerShip, function(
 		if(err){
 			console.log(err)
 		}
-		Comment.deleteMany( {_id: { $in: element.comments } }, (err) => {
+		Comment.deleteMany( {_id: { $in: element.comment } }, (err) => {
 		if (err) {
 			console.log(err);
 		}
