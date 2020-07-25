@@ -33,11 +33,13 @@ router.get('/login', function(req, res){
 	res.render('login')
 })
 
-router.post('/login', passport.authenticate('local', {
-	successRedirect: "/campgrounds",
-	failureRedirect: "/login"}), function(req, res){
-	
-})
+router.post("/login",passport.authenticate("local",{
+    failureRedirect: "/login"
+}),(req,res)=>{
+    let redirectTo = req.session.redirectTo || "/campgrounds" ;
+    delete req.session.redirectTo;
+    res.redirect(redirectTo)
+});
 
 router.get('/logout', function(req, res){
 	req.flash('success', 'You have logged out')
