@@ -4,6 +4,30 @@ var Comment = require('../models/Comment')
 var router = express.Router()
 var middleware = require('../middleware') 
 
+var multer = require('multer');
+var storage = multer.diskStorage({
+  filename: function(req, file, callback) {
+    callback(null, Date.now() + file.originalname);
+  }
+});
+var imageFilter = function (req, file, cb) {
+    // accept image files only
+    if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/i)) {
+        return cb(new Error('Only image files are allowed!'), false);
+    }
+    cb(null, true);
+};
+var upload = multer({ storage: storage, fileFilter: imageFilter})
+
+var cloudinary = require('cloudinary');
+cloudinary.config({ 
+  cloud_name: 'junhano', 
+  api_key: process.env.CLOUDINARY_API_KEY, 
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
+
+
 router.get('/campgrounds', function(req, res){
 	Campground.find({}, function(err, campgrounds){
 		if (err){
@@ -16,20 +40,23 @@ router.get('/campgrounds', function(req, res){
 })
 
 
-router.post('/campgrounds', middleware.isLoggedIn, function(req, res){
-	let title = req.body.name
-	let src = req.body.image
-	let price = req.body.price
-	let des = req.body.des
-	Campground.create({name:title, price: price, image:src, description:des, author: {id: req.user, name: req.user.username}}, function(err, campgrounds){
-		if (err){
-			console.log(err)
+router.post('/campgrounds', middleware.isLoggedIn, upload.single('image'), function(req, res){
+	cloudinary.uploader.upload(req.file.path, function(result) {
+	  // add cloudinary url for the image to the campground object under image property
+	  req.body.campground.image = result.secure_url;
+	  // add author to campground
+	  req.body.campground.author = {
+		id: req.user._id,
+		username: req.user.username
+	  }
+	  Campground.create(req.body.campground, function(err, campground) {
+		if (err) {
+		  req.flash('error', err.message);
+		  return res.redirect('back');
 		}
-		else{
-			res.redirect('/campgrounds')
-		}
-	})
-
+		res.redirect('/campgrounds/' + campground.id);
+	  });
+	});
 })
 
 router.get("/campgrounds/new", middleware.isLoggedIn, function(req, res){
