@@ -44,6 +44,7 @@ router.post('/campgrounds', middleware.isLoggedIn, upload.single('image'), funct
 	cloudinary.uploader.upload(req.file.path, function(result) {
 	  // add cloudinary url for the image to the campground object under image property
 	  req.body.campground.image = result.secure_url;
+	  req.body.campground.imageID = result.public_id;
 	  // add author to campground
 	  req.body.campground.author = {
 		id: req.user._id,
@@ -84,21 +85,46 @@ router.get('/campgrounds/:id/edit', middleware.checkCampgroundOwnerShip, functio
 		
 })
 
-router.put('/campgrounds/:id', middleware.checkCampgroundOwnerShip, function(req, res){
-	Campground.findByIdAndUpdate(req.params.id, req.body.campground, function(err, element){
+router.put('/campgrounds/:id', middleware.checkCampgroundOwnerShip, upload.single('image'), async function(req, res){
+	
+	Campground.findById(req.params.id, async function(err, element){
 		if (err){
-			res.redirect('/campgrounds')
+			res.redirect('back')
 		}
 		else{
+			if (req.file){
+				try{
+					await cloudinary.uploader.destroy(element.imageID);
+					let result = await cloudinary.uploader.upload(req.file.path);
+					element.image = result.secure_url;
+					element.imageID = result.public_id;
+				}
+				catch{
+					res.redirect('back');
+				}
+				
+			}
+			element.name = req.body.name;
+			element.price = req.body.price;
+			element.description = req.body.description;
+			element.save();
 			res.redirect('/campgrounds/' + req.params.id)
 		}
 	})
+
 })
 
 router.delete('/campgrounds/:id', middleware.checkCampgroundOwnerShip, function(req, res){
-	Campground.findByIdAndDelete(req.params.id, function(err, element){
+	Campground.findByIdAndDelete(req.params.id, async function(err, element){
 		if(err){
 			console.log(err)
+		}
+		
+		try{
+			await cloudinary.uploader.destroy(element.imageID);
+		}
+		catch{
+			console.log('err')	
 		}
 		Comment.deleteMany( {_id: { $in: element.comment } }, (err) => {
 		if (err) {
