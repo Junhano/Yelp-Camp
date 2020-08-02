@@ -1,25 +1,25 @@
-var express = require('express')
-var Campground = require('../models/Campground')
-var Comment = require('../models/Comment')
-var router = express.Router()
-var middleware = require('../middleware') 
-
-var multer = require('multer');
-var storage = multer.diskStorage({
+const express = require('express'),
+      Campground = require('../models/Campground'),
+      Comment = require('../models/Comment'),
+      router = express.Router(),
+      middleware = require('../middleware'), 
+      multer = require('multer')
+	  
+let storage = multer.diskStorage({
   filename: function(req, file, callback) {
     callback(null, Date.now() + file.originalname);
   }
 });
-var imageFilter = function (req, file, cb) {
+let imageFilter = function (req, file, cb) {
     // accept image files only
     if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/i)) {
         return cb(new Error('Only image files are allowed!'), false);
     }
     cb(null, true);
 };
-var upload = multer({ storage: storage, fileFilter: imageFilter})
+let upload = multer({ storage: storage, fileFilter: imageFilter})
 
-var cloudinary = require('cloudinary');
+const cloudinary = require('cloudinary');
 cloudinary.config({ 
   cloud_name: 'junhano', 
   api_key: process.env.CLOUDINARY_API_KEY, 

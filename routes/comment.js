@@ -1,8 +1,8 @@
-var express = require('express')
-var Campground = require('../models/Campground')
-var Comment = require('../models/Comment')
-var router = express.Router()
-var middleware = require('../middleware') 
+const express = require('express'),
+	  Campground = require('../models/Campground'),
+	  Comment = require('../models/Comment'),
+	  router = express.Router(),
+	  middleware = require('../middleware') 
 
 //comment route
 router.get('/campgrounds/:id/comment/new', middleware.isLoggedIn, function(req, res){

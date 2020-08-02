@@ -1,21 +1,20 @@
-var express = require('express')
-var app = express()
-var bodyParser = require("body-parser")
-var mongoose = require('mongoose')
-var Campground = require('./models/Campground')
-var Comment = require('./models/Comment')
-var passport = require('passport')
-var LocalStrategy = require('passport-local')
-var User = require('./models/User')
-var seedDB = require('./seeds')
-var methodOverride = require('method-override')
-var flash = require('connect-flash')
-
-var commentRoute = require('./routes/comment'),
+const express = require('express'),
+    app = express(),
+    bodyParser = require("body-parser"),
+    mongoose = require('mongoose'),
+    Campground = require('./models/Campground'),
+    Comment = require('./models/Comment'),
+    passport = require('passport'),
+    LocalStrategy = require('passport-local'),
+    User = require('./models/User'),
+    seedDB = require('./seeds'),
+    methodOverride = require('method-override'),
+    flash = require('connect-flash'),
+    commentRoute = require('./routes/comment'),
 	campgroundRoute = require('./routes/campground'),
 	indexRoute = require('./routes/index')
 
-var url = process.env.DATABASEURL || "mongodb://localhost/yelp_camp"
+let url = process.env.DATABASEURL || "mongodb://localhost/yelp_camp"
 mongoose.connect(url, 
 {useNewUrlParser:true,
 useUnifiedTopology: true
@@ -67,7 +66,7 @@ app.use(campgroundRoute)
 app.use(indexRoute)
 
 
-var port = process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 app.listen(port, function () {
     console.log("Server Has Started!");
 });

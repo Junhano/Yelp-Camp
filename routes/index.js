@@ -1,14 +1,17 @@
-var express = require('express')
-var router = express.Router()
-var User = require('../models/User')
-var passport = require('passport')
-
+const express = require('express'),
+	  router = express.Router(),
+	  User = require('../models/User'),
+	  passport = require('passport'),
+	  middleware = require('../middleware') 
 
 router.get('/', function(req,res){
-	res.render('home', {currentUser: req.user})
+	res.render('home')
 })
 
 
+router.get('/user', middleware.isLoggedIn, function(req,res){
+	res.render('user')
+})
 
 //Auth
 router.get('/register', function(req, res){
