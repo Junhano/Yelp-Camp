@@ -1,0 +1,16 @@
+<div class="modal fade" id="newprofile" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <form action = "/profilepic" method="post" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="imagesrc" class="col-form-label">Image:</label>
+            <input type="file" class="form-control" id="imagesrc" accept="image/*" name = "imagesrc" required>
+          </div>
+		  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		  <button type="submit" class="btn btn-primary">Upload Profile Picture</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -12,7 +12,8 @@ const express = require('express'),
     flash = require('connect-flash'),
     commentRoute = require('./routes/comment'),
 	campgroundRoute = require('./routes/campground'),
-	indexRoute = require('./routes/index')
+	indexRoute = require('./routes/index'),
+	userRoute = require('./routes/user')
 
 let url = process.env.DATABASEURL || "mongodb://localhost/yelp_camp"
 mongoose.connect(url, 
@@ -63,7 +64,11 @@ app.use((req, res, next) => {
 
 app.use(commentRoute)
 app.use(campgroundRoute)
+app.use(userRoute)
 app.use(indexRoute)
+
+
+
 
 
 const port = process.env.PORT || 3000;

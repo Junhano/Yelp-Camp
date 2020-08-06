@@ -1,8 +1,28 @@
 <%- include("partials/header") %>
 	<div class = "container">
-		<h1 class = "text-center">
-			<%= currentUser.username %>
-		</h1>
+		<div class = "jumbotron">
+			<div>
+				<h1>
+					<% if (currentUser.profilepic){ %>
+						<img src = "<%= currentUser.profile.img %>">
+					<% }else{ %>
+						<img src = "https://www.pikpng.com/pngl/m/16-168770_user-iconset-no-profile-picture-icon-circle-clipart.png">
+					<%} %>	
+					<%= currentUser.username %>
+				</h1>	
+				<p class = "mb-0">
+					<% if (currentUser.profilepic){ %>
+						<a data-toggle="modal" data-target="#editprofile">Change Profile Pic</a>
+						<%- include("partials/editprofile") %>
+					<% }else{ %>
+						<a data-toggle="modal" data-target="#newprofile">Add New Profile Pic</a>
+						<%- include("partials/newprofile") %>
+					<%} %>
+				</p>
+			</div>
+		
+		</div>
+
 	</div>
 
 <%- include("partials/footer") %>
