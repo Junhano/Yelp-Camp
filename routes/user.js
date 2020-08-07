@@ -26,7 +26,9 @@ cloudinary.config({
 });
 
 
-
+router.get('/profilepic', function(req, res){
+	res.redirect('/user')
+})
 
 
 

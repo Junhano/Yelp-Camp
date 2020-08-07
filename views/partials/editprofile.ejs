@@ -4,8 +4,9 @@
       <div class="modal-body">
         <form action = "/profilepic?_method=PUT" method="POST" enctype="multipart/form-data">
           <div class="form-group">
-            <label for="imagesrc" class="col-form-label">Image:</label>
-            <input type="file" class="form-control" name = "imagesrc" accept="image/*" id="imagesrc" required>
+            <label for="imagesrc" class="col-form-label">Profile:</label>
+			<img class = "editp" src = "<%= currentUser.profile.img %>">
+            <input type="file" class="form-control" name = "imagesrc" accept="image/*" onchange="loadFile(event, false)" id="imagesrc" required>
           </div>
 		  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 		  <button type="submit" class="btn btn-primary">Upload Profile Picture</button>

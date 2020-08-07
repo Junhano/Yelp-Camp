@@ -4,8 +4,9 @@
       <div class="modal-body">
         <form action = "/profilepic" method="post" enctype="multipart/form-data">
           <div class="form-group">
-            <label for="imagesrc" class="col-form-label">Image:</label>
-            <input type="file" class="form-control" id="imagesrc" accept="image/*" name = "imagesrc" required>
+            <label for="imagesrc" class="col-form-label">Profile:</label>
+			<img class = "newp" src = "https://www.pikpng.com/pngl/m/16-168770_user-iconset-no-profile-picture-icon-circle-clipart.png">
+            <input type="file" class="form-control" id="imagesrc" accept="image/*" name = "imagesrc" onchange="loadFile(event, true)" required>
           </div>
 		  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 		  <button type="submit" class="btn btn-primary">Upload Profile Picture</button>
