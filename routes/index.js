@@ -37,7 +37,7 @@ router.get('/login', function(req, res){
 })
 
 router.post("/login",passport.authenticate("local",{
-    failureRedirect: "/login"
+    failureRedirect: "/login", failureFlash: true
 }),(req,res)=>{
     let redirectTo = req.session.redirectTo || "/campgrounds" ;
     delete req.session.redirectTo;
